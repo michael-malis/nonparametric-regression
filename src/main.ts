@@ -236,7 +236,11 @@ if (params.has('count') || params.has('outlier') || params.has('preset')) {
 }
 if(params.get('profile')==='1')store.set({profileOpen:true});
 const requested = params.get('exp') as ExperimentId | null;
-if(requested && METHOD_EXPERIMENTS[store.get().method].includes(requested))lecture.bookmark(requested);
+if(requested && METHOD_EXPERIMENTS[store.get().method].includes(requested)){
+  lecture.bookmark(requested);
+} else {
+  setMode('explore');
+}
 message.textContent='';
 store.flushAll();document.fonts.ready.then(()=>{v2.draw();chart.draw();});requestAnimationFrame(frame);
 Object.assign(window,{__demo:{state:()=>store.get(),prediction:()=>prediction(store.get()),cells:()=>cells(store.get()),v2,get v3(){return surface();},

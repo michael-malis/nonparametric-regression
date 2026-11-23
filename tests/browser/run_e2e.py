@@ -80,6 +80,8 @@ def run():
             return p
         ctx=browser.new_context(viewport=dict(width=1366,height=768),reduced_motion='reduce')
         p=open_page(ctx)
+        check('Explore opens with visible method controls',p.evaluate('__demo.mode()')=='explore' and p.locator('.methods').is_visible())
+        mode(p,'demo')
         check('Lecture opens ready for Start',len(state(p)['X'])==8 and not state(p)['includeOutlier'] and not state(p)['experiment'] and p.get_by_role('button',name='Start',exact=True).is_enabled())
         check('Lecture needs no method, view or example selection',p.locator('.scene-head button:visible,footer select:visible').count()==0)
         p.keyboard.press('PageDown')
@@ -195,6 +197,7 @@ def run():
             return type==='webgl2'?null:original.call(this,type,...args);
           }''')
         f=fallback.new_page();f.goto(URL);f.wait_for_function('!!window.__demo')
+        mode(f,'demo')
         for i in range(8):
             click(f,'#play')
             assert state(f)['view']=='2d' and f.locator('#scene-context').inner_text().startswith(f'Scene {i+1} of 8')
@@ -202,6 +205,7 @@ def run():
         fallback.close()
         video=browser.new_context(viewport=dict(width=1366,height=768),record_video_dir=OUT,record_video_size=dict(width=1366,height=768))
         p=open_page(video)
+        mode(p,'demo')
         for index,(m,v,ex) in enumerate(route,1):
             click(p,'#play')
             if m=='knn' and ex=='response':
