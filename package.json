@@ -1,0 +1,33 @@
+{
+  "name": "nonparametric-regression-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "verify:numpy": "tsx tests/numerical/export_cases.ts && python -I tests/numerical/check_numpy.py && tsx tests/numerical/export_experiments.ts && python -I tests/numerical/check_experiments.py",
+    "e2e": "python tests/browser/run_e2e.py && python tests/browser/markers.py",
+    "verify:all": "npm run test && npm run build && npm run verify:numpy && npm run e2e"
+  },
+  "dependencies": {
+    "@fontsource/atkinson-hyperlegible": "^5.3.0",
+    "katex": "^0.19.1",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/d3-delaunay": "^6.0.4",
+    "@types/katex": "^0.16.8",
+    "@types/three": "^0.187.0",
+    "d3-delaunay": "^6.0.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vite-plugin-singlefile": "^2.3.4",
+    "vitest": "^4.1.12"
+  },
+  "description": "Interactive 1NN, kNN and Nadaraya–Watson regression on two features, 2-D and 3-D (lecture demo)."
+}
