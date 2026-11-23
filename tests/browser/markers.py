@@ -59,7 +59,7 @@ def check_site_pixels(page, node, phase):
 
 def inspect(page, width, height):
     page.set_viewport_size(dict(width=width, height=height))
-    page.locator('[data-mode="explore"]').click()
+    page.locator('button[data-mode="explore"]').click()
     for method in ['1nn', 'knn', 'nw']:
         page.locator(f'[data-method="{method}"]').click()
         for view in ['2d', '3d']:
@@ -95,7 +95,7 @@ def inspect(page, width, height):
             assert page.evaluate('__demo.state().Y')==before['Y']
             print(f'PASS {width}x{height} {method} {view} pointer capture, move, release and undo',flush=True)
     page.screenshot(path=OUT/f'explore-{width}.png')
-    page.locator('[data-mode="voronoi"]').click()
+    page.locator('button[data-mode="voronoi"]').click()
     node=page.locator('[data-site="0"]')
     box=node.bounding_box()
     assert 7 <= box['width'] <= 10, box
@@ -134,13 +134,13 @@ def inspect(page, width, height):
     assert abs(node.bounding_box()['x']+box['width']/2-x)<2, (box, near, end, node.bounding_box())
     page.locator('#reset-sites').click()
     print(f'PASS {width}x{height} Voronoi painted pixels, keyboard focus and nearest-site dragging',flush=True)
-    page.locator('[data-mode="demo"]').click()
+    page.locator('button[data-mode="demo"]').click()
     page.locator('#experiment').select_option('6')
     page.wait_for_function("__demo.state().experiment?.id === 'hsweep'")
 
 
 def check_moments(page):
-    page.locator('[data-mode="explore"]').click()
+    page.locator('button[data-mode="explore"]').click()
     page.locator('[data-view="2d"]').click()
     page.locator('.meaning summary').click()
     for method, setting in [('knn','1'),('knn','8'),('nw','0.15'),('nw','6')]:
